@@ -251,14 +251,41 @@ height: 44px;
 }
 
 .temp-fav{
-padding-left: 100px;
+padding-left: 130px;
 
+}
 
+.temp-fav1{
+padding-left: 155px;
+
+}
+
+.temp-fav3{
+
+padding-left: 155px;
+
+}
+
+.temp-fav4{
+padding-left: 140px;
+
+}
+
+.temp-fav5{
+
+padding-left: 150px;
 }
 
 .title-fav-day{
 
 font-size: 35px;
 color: black;
+
+}
+
+
+.ity-name{
+font-size: 24px;
+font-weight: 400;
 
 }

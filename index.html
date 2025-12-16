@@ -47,25 +47,6 @@
         </div>
     </nav>
 
-    <!--current weather card-->
-
-    <!--div class="container mt-3 pt-3">
-        <div class="row">
-            <div class="col-8">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title fs-4">Stockton, CA</h5>
-                        <img src="/imges/white-star-noBlack-AI.png" class="white-star">
-                        <p class="card-text">Monday</p>
-                        <h2 class="fw-bold">50° F</h2>
-                        <img src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid icon mb-3">
-                        <p class="text">Partly Cloudy</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div-->
-
     <!--Current-Weather-Card-->
 
     <div class="container mt-3 pt-3">
@@ -73,12 +54,12 @@
             <div class="col-8">
                 <div class="card text-center h-100">
                     <div class="card-body">
-                        <h5 class="card-title fs-4">Stockton, CA</h5>
-                        <img id="favouriteStar"  src="/imges/white-star-noBlack-AI.png" class="white-star">
-                        <p class="card-text">Monday</p>
-                        <h2 class="fw-bold">41° F</h2>
+                        <h5 id="cityName" class="card-title fs-4">Stockton, CA</h5>
+                        <img id="favouriteStar" src="/imges/white-star-noBlack-AI.png" class="white-star">
+                        <p id="dayOfWeek" class="card-text">Monday</p>
+                        <h2 id="tempRecord" class="fw-bold">41° F</h2>
                         <img src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid icon mb-3">
-                        <p class="text">Cloudy</p>
+                        <p id="weatherIcon" class="text">Cloudy</p>
                     </div>
                 </div>
             </div>
@@ -87,42 +68,42 @@
 
             <div class="col-4  pt-2">
                 <h5 class="title-fav-day">Top 5 Favorites List</h5>
-                <div class="card text-center mb-4 mt-5" style="height: 60px;">
+                <div class="card text-center mb-4 mt-5" style="height: 60px; width:350px;">
                     <div class="card-body  d-flex justify-content-between align-items-center p-2 ">
-                        <p class="card-text small mb-0">Stockton, CA</p>
+                        <p class="card-text mb-0 city-name">Stockton, CA</p>
+                        <p class="card-text small mb-0 temp-fav1">32°F</p>
+                        <img src="/imges/sunAndRainy.png" class="fav-icon">
+                    </div>
+                </div>
+
+                <div class="card text-center mb-4" style="height: 60px;width: 350px;">
+                    <div class="card-body d-flex justify-content-between align-items-center p-2">
+                        <p class="card-text  mb-0 city-name">San Francisco,CA</p>
                         <p class="card-text small mb-0 temp-fav">32°F</p>
                         <img src="/imges/sunAndRainy.png" class="fav-icon">
                     </div>
                 </div>
 
-                <div class="card text-center mb-4" style="height: 60px;">
+                <div class="card text-center mb-4" style="height: 60px; width: 350px;">
                     <div class="card-body d-flex justify-content-between align-items-center p-2">
-                        <p class="card-text small mb-0 fw-bold">San Francisco,CA</p>
-                        <p class="card-text small mb-0 temp-fav">32°F</p>
-                        <img src="/imges/sunAndRainy.png" class="fav-icon">
-                    </div>
-                </div>
-
-                <div class="card text-center mb-4" style="height: 60px;">
-                    <div class="card-body d-flex justify-content-between align-items-center p-2">
-                        <p class="card-text small mb-0 fw-bold">Buckeye,CA</p>
-                        <p class="card-text small mb-0 temp-fav">78°F</p>
+                        <p class="card-text  mb-0 fcity-name">Buckeye,CA</p>
+                        <p class="card-text small mb-0 temp-fav3">78°F</p>
                         <img src="/imges/sun-icon.png" class="fav-icon">
                     </div>
                 </div>
 
-                <div class="card text-center mb-4" style="height: 60px;">
+                <div class="card text-center mb-4" style="height: 60px; width: 350px;">
                     <div class="card-body d-flex justify-content-between align-items-center p-2">
-                        <p class="card-text small mb-0 fw-bold">London,England</p>
-                        <p class="card-text small mb-0 temp-fav">32°F</p>
+                        <p class="card-text  mb-0 city-name">London,England</p>
+                        <p class="card-text small mb-0 temp-fav4">32°F</p>
                         <img src="/imges/sunAndRainy.png" class="fav-icon">
                     </div>
                 </div>
 
-                <div class="card text-center " style="height: 60px;">
+                <div class="card text-center " style="height: 60px; width: 350px;">
                     <div class="card-body d-flex justify-content-between align-items-center p-2">
-                        <p class="card-text small mb-0 fw-bold">Berkeley,CA</p>
-                        <p class="card-text small mb-0 temp-fav">59°F</p>
+                        <p class="card-text  mb-0 city-name">Berkeley,CA</p>
+                        <p class="card-text small mb-0 temp-fav5">59°F</p>
                         <img src="/imges/sunAndRainy.png" class="fav-icon">
                     </div>
                 </div>
