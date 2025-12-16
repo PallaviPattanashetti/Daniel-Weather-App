@@ -1,5 +1,13 @@
 const getLongitude = "/longitude";
 const getLatitude = "Latitude";
+const searchUserInput= document.getElementsById("searchUserInput");
+const getLocationBtn = document.getElementsByClassName("getLocationBtn");
+const darkModeToggleLink= document.getElementById("darkModeToggleLink");
+
+getLocationBtn
+
+
+
 
  function getCurrentPosition(){
 
