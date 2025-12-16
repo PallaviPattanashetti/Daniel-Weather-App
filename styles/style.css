@@ -235,3 +235,30 @@ h5{
 font-size: 35px;
 
 }
+
+
+.title-fav-list{
+color: white;
+font-size: 35px;
+
+}
+
+.fav-icon{
+
+width: 44px;
+height: 44px;
+
+}
+
+.temp-fav{
+padding-left: 100px;
+
+
+}
+
+.title-fav-day{
+
+font-size: 35px;
+color: black;
+
+}
