@@ -5,15 +5,8 @@ background-position: center center;
   background-size: cover;         
   background-attachment: fixed;       
   min-height: 100vh;  
-   padding-top: 80px; 
+   padding-top: 0px; 
 }
-
-
-
-
-
-
-
 
 
 .title-home{
@@ -26,10 +19,9 @@ background-position: center center;
 
 width: 300px;
 
-
-
 }
  
+
 .switch {
   position: relative;
   display: inline-flex;
@@ -131,10 +123,12 @@ color: white;
 
 background-color: #6b5fa6;
 height: 508px;
-
+width:100%;
 margin-right: 35%;
 border-radius: 20px;
 top: 50px;
+
+
 
 
 }
@@ -190,7 +184,7 @@ height: 80px;
  position: absolute;
   top: 15px;
   right: 15px;
-  margin-right: 35%;
+  margin-right: 5%;
 }
 
 .card-body5{
@@ -231,3 +225,13 @@ color: white;
 letter-spacing: 0%;
 }
 
+.fav-cards{
+
+  margin-top: 300%;
+}
+
+h5{
+
+font-size: 35px;
+
+}
