@@ -1,10 +1,9 @@
-const getLongitude = "/longitude";
-const getLatitude = "Latitude";
-const searchUserInput= document.getElementsById("searchUserInput");
-const getLocationBtn = document.getElementsByClassName("getLocationBtn");
+//const getLongitude = "/longitude";
+//const getLatitude = "Latitude";
+const searchUserInput= document.getElementById("searchUserInput");
+const getLocationBtn = document.getElementById("getLocationBtn");
 const darkModeToggleLink= document.getElementById("darkModeToggleLink");
-
-getLocationBtn
+const favouriteStar = document.getElementById("favouriteStar");
 
 
 
@@ -17,7 +16,9 @@ getLocationBtn
  }
 apiCall();
 
+getCurrentPosition();
 
 
 
- getCurrentPosition()
+
+
