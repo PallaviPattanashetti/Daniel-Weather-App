@@ -131,11 +131,11 @@ color: white;
 
 background-color: #6b5fa6;
 height: 508px;
-margin-left: 15%;
-margin-right: 15%;
+
+margin-right: 35%;
 border-radius: 20px;
-top: 150px;
-left: 325px;
+top: 50px;
+
 
 }
 
@@ -190,7 +190,7 @@ height: 80px;
  position: absolute;
   top: 15px;
   right: 15px;
-  margin-right: 15%;
+  margin-right: 35%;
 }
 
 .card-body5{
@@ -230,3 +230,4 @@ font-size: 24px;
 color: white;
 letter-spacing: 0%;
 }
+
