@@ -2,7 +2,7 @@ const saveToStorage = (city) => {
 
     let cityArray = getLocalStorage();
 
-    
+
 
     
     if (!cityArray.includes(city)) {
@@ -32,3 +32,5 @@ const removeFromStorage = () => {
 
 localStorage.setItem('city', JSON.stringify(cityArray));
 }
+
+export {saveToStorage, getLocalStorage,removeFromStorage}
