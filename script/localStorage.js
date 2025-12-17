@@ -2,12 +2,14 @@ const saveToStorage = (city) => {
 
     let cityArray = getLocalStorage();
 
-}
+    
 
-if (!cityArray.includes(city)) {
-    cityArray.push(city);
+    
+    if (!cityArray.includes(city)) {
+        cityArray.push(city);
+    }
+    localStorage.setItem('city', JSON.stringify(cityArray));
 }
-localStorage.setItem('Names', JSON.stringify(cityArray));
 
 
 const getLocalStorage = () => {
@@ -18,4 +20,15 @@ const getLocalStorage = () => {
         return [];
     }
     return JSON.parse(value);
+}
+
+
+const removeFromStorage = () => {
+    let cityArray = getLocalStorage();
+   
+    let cityIndex = cityArray.indexOf(city);
+  
+    cityArray.splice(cityIndex, 1);
+
+localStorage.setItem('city', JSON.stringify(cityArray));
 }

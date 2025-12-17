@@ -1,23 +1,21 @@
+
+import { APIKEY } from './environment.js';
+
+
 const getLongitude = "/longitude";
 const getLatitude = "Latitude";
+
 const searchUserInput = document.getElementById("searchUserInput");
 const getLocationBtn = document.getElementById("getLocationBtn");
 
-const favouriteStarBtn = document.getElementById("favouriteStarBtn");
-const getCurrentLocation = document.getElementById("getCurrentLocation");
-const favoritesCity = document.getElementById("favoriteCity");
-const storedValue = document.getElementById("storedValue");
+const currentLocation = document.getElementById("currentLocation");
 
 
 
 
-function apiCall() {
 
-   fetch('https://api.openweathermap.org/data/2.5/forecast?q=stockton&appid=62042061ec88239bfcf89d1be981c431')
-      .then(response => response.json())
-      .then(json => console.log(json))
-}
-apiCall();
+
+
 
 //Toggle - Button
 
@@ -37,14 +35,47 @@ toggle.addEventListener('change', function () {
    }, 250);
 });
 
+
+function apiCall(city) {
+
+   fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKEY}`)
+      .then(response => response.json())
+      .then(json => console.log(json))
+}
+apiCall();
+
 // search Button---
 
-searchUserInput.addEventListener("click", () => {
-
-   apiCall();
-})
-favouriteStarBtn.addEventListener("click", () => {
-   let cityInput = userInput.value;
-    saveToStorage(cityInputInput);
-
+getLocationBtn.addEventListener("click", () => {
+let city = document.getElementById("searchUserInput").value;
+   apiCall(city);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
