@@ -3,12 +3,10 @@ const getLatitude = "Latitude";
 const searchUserInput = document.getElementById("searchUserInput");
 const getLocationBtn = document.getElementById("getLocationBtn");
 
-const favouriteStar = document.getElementById("favouriteStar");
+const favouriteStarBtn = document.getElementById("favouriteStarBtn");
 const getCurrentLocation = document.getElementById("getCurrentLocation");
-const cityName = document.getElementById("cityName");
-const dayOfWeek = document.getElementById("dayOfWeek");
-const tempRecord = document.getElementById("tempRecord");
-const weatherIcon = document.getElementById("weatherIcon");
+const favoritesCity = document.getElementById("favoriteCity");
+const storedValue = document.getElementById("storedValue");
 
 
 
@@ -20,8 +18,6 @@ function apiCall() {
       .then(json => console.log(json))
 }
 apiCall();
-
-
 
 //Toggle - Button
 
@@ -39,4 +35,16 @@ toggle.addEventListener('change', function () {
          window.location.href = 'index.html';
       }
    }, 250);
+});
+
+// search Button---
+
+searchUserInput.addEventListener("click", () => {
+
+   apiCall();
+})
+favouriteStarBtn.addEventListener("click", () => {
+   let cityInput = userInput.value;
+    saveToStorage(cityInputInput);
+
 });
