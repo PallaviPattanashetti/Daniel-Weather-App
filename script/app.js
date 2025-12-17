@@ -2,7 +2,7 @@ const getLongitude = "/longitude";
 const getLatitude = "Latitude";
 const searchUserInput = document.getElementById("searchUserInput");
 const getLocationBtn = document.getElementById("getLocationBtn");
-const darkModeToggleLink = document.getElementById("darkModeToggleLink");
+
 const favouriteStar = document.getElementById("favouriteStar");
 const getCurrentLocation = document.getElementById("getCurrentLocation");
 const cityName = document.getElementById("cityName");
@@ -23,9 +23,20 @@ apiCall();
 
 
 
+//Toggle - Button
 
-
-
-
-
-
+const toggle = document.querySelector('.switch input');
+if (window.location.pathname.includes('night.html')) {
+   toggle.checked = true;
+} else {
+   toggle.checked = false;
+}
+toggle.addEventListener('change', function () {
+   setTimeout(() => {
+      if (this.checked) {
+         window.location.href = 'night.html';
+      } else {
+         window.location.href = 'index.html';
+      }
+   }, 250);
+});
