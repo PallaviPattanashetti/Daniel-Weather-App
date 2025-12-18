@@ -12,6 +12,7 @@
 </head>
 
 <!--background image starts here-->
+
 <body background="/imges/cloudy-sky-day.jpg">
 
 
@@ -31,9 +32,8 @@
                     <div class="search-wrapper w-100">
                         <input id="searchUserInput" class="form-control search-bar" type="search"
                             placeholder="Search City" aria-label="Search City" name="city-search">
-                            
                     </div>
-                    <button id ="getLocationBtn" type="button" class="btn btn-primary">check</button>
+                    <button id="getLocationBtn" type="button" class="btn btn-primary">check</button>
                 </form>
                 <div class="d-flex align-items-center ms-lg-3 mt-3 mt-lg-0">
                     <span class="title-toggle me-2" id="darkModeToggleText">Toggle Dark<br> Mode</span>
@@ -50,18 +50,18 @@
 
     <div class="container mt-3 pt-3">
         <div class="row">
-            <div id="currentLocation" class="col-8">
+            <div id="currentCityName" class="col-12 col-lg-8 mb-4">
                 <div class="card text-center h-100">
                     <div class="card-body">
-                        <h5 class="card-title">Stockton, CA</h5>
-                        <img  src="/imges/white-star-noBlack-AI.png" class="white-star">
-                        <p  class="card-text">Monday</p>
-                        <h2  class="fw-bold">41° F</h2>
-                        <img src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid icon mb-3">
-                        <p class="text">Cloudy</p>
+                        <h5 id="cityName"class="card-title">Stockton, CA</h5>
+                        <img id="favouriteStar" src="/imges/white-star-noBlack-AI.png" class="white-star">
+                        <p id="currentDay"class="card-text">Monday</p>
+                        <h2 id="currentTemp" class="fw-bold">41° F</h2>
+                        <img id="currentIcon"src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid icon mb-3">
+                        <p id="weatherDescription" class="text">Cloudy</p>
                         <div class="high-low-container d-flex justify-content-center">
-                            <span class="high">H: 45°</span>
-                            <span class="low">L: 32°</span>
+                            <span id="currentHigh" class="high">H: 45°</span>
+                            <span id="currentLow" class="low">L: 32°</span>
                         </div>
                     </div>
                 </div>
@@ -69,50 +69,64 @@
 
             <!--Fav-cards-->
 
-            <div id="storedValue" class="col-4  pt-2">
-                <h5 class="title-fav-day">Top 5 Favorites List</h5>
-                <div id="favoritesList" class="card text-center mb-4 mt-5" style="height: 60px;">
-                    <div class="card-body  d-flex justify-content-between align-items-center p-2 ">
-                        <p class="card-text  mb-0 city-name">Stockton,CA</p>
-                        <p class="card-temperature small mb-0">32°F</p>
-                        <img src="/imges/sunAndRainy.png" class="fav-icon">
-                    </div>
-                </div>
+         <div id="favoritesList" class="col-12 col-lg-4 pt-2">
+    <h5 class="title-fav-list mb-3">Top 5 Favorites List</h5>
 
-                <div class="card text-center mb-4" style="height: 60px;">
-                    <div class="card-body d-flex justify-content-between align-items-center p-2">
-                        <p class="card-text  mb-0 city-name">San Francisco,CA</p>
-                        <p class="card-temperature1 small mb-0">32°F</p>
-                        <img src="/imges/sunAndRainy.png" class="fav-icon">
-                    </div>
-                </div>
-
-                <div class="card text-center mb-4" style="height: 60px;">
-                    <div class="card-body d-flex justify-content-between align-items-center p-2">
-                        <p class="card-text  mb-0 city-name">Berkeley,CA</p>
-                        <p class="card-temperature2 small mb-0">78°F</p>
-                        <img src="/imges/sun-icon.png" class="fav-icon">
-                    </div>
-                </div>
-
-                <div class="card text-center mb-4" style="height: 60px;">
-                    <div class="card-body d-flex justify-content-between align-items-center p-2">
-                        <p class="card-text  mb-0 city-name">London,England</p>
-                        <p class="card-temperature3 small mb-0">32°F</p>
-                        <img src="/imges/sunAndRainy.png" class="fav-icon">
-                    </div>
-                </div>
-
-                <div class="card text-center " style="height: 60px;">
-                    <div class="card-body d-flex justify-content-between align-items-center p-2">
-                        <p class="card-text  mb-0 city-name">Berkeley,CA</p>
-                        <p class="card-temperature4 small mb-0">59°F</p>
-                        <img src="/imges/sunAndRainy.png" class="fav-icon">
-                    </div>
-                </div>
+    <div  class="card mb-3 shadow-sm mx-auto" 
+         style="height: 71px; max-width: 364px; width: 100%; border-radius: 10px; overflow: hidden;">
+        <div class="card-body d-flex justify-content-between align-items-center p-3">
+            <p class="card-text city-name mb-0 fw-medium">Stockton, CA</p>
+            <div class="d-flex align-items-center">
+                <p class="card-temperature mb-0 me-3 fw-bold">32°F</p>
+                <img src="/imges/sunAndRainy.png" class="fav-icon" style="height: 35px; width: auto;">
             </div>
         </div>
     </div>
+
+    <div class="card mb-3 shadow-sm mx-auto" 
+         style="height: 71px; max-width: 364px; width: 100%; border-radius: 10px; overflow: hidden;">
+        <div class="card-body d-flex justify-content-between align-items-center p-3">
+            <p class="card-text city-name mb-0 fw-medium">San Francisco, CA</p>
+            <div class="d-flex align-items-center">
+                <p class="card-temperature mb-0 me-3 fw-bold">32°F</p>
+                <img src="/imges/sunAndRainy.png" class="fav-icon" style="height: 35px; width: auto;">
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3 shadow-sm mx-auto" 
+         style="height: 71px; max-width: 364px; width: 100%; border-radius: 10px; overflow: hidden;">
+        <div class="card-body d-flex justify-content-between align-items-center p-3">
+            <p class="card-text city-name mb-0 fw-medium">Buckeye, CA</p>
+            <div class="d-flex align-items-center">
+                <p class="card-temperature mb-0 me-3 fw-bold">78°F</p>
+                <img src="/imges/sun-icon.png" class="fav-icon" style="height: 35px; width: auto;">
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3 shadow-sm mx-auto" 
+         style="height: 71px; max-width: 364px; width: 100%; border-radius: 10px; overflow: hidden;">
+        <div class="card-body d-flex justify-content-between align-items-center p-3">
+            <p class="card-text city-name mb-0 fw-medium">London, England</p>
+            <div class="d-flex align-items-center">
+                <p class="card-temperature mb-0 me-3 fw-bold">32°F</p>
+                <img src="/imges/sunAndRainy.png" class="fav-icon" style="height: 35px; width: auto;">
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3 shadow-sm mx-auto" 
+         style="height: 71px; max-width: 364px; width: 100%; border-radius: 10px; overflow: hidden;">
+        <div class="card-body d-flex justify-content-between align-items-center p-3">
+            <p class="card-text city-name mb-0 fw-medium">Berkeley, CA</p>
+            <div class="d-flex align-items-center">
+                <p class="card-temperature mb-0 me-3 fw-bold">59°F</p>
+                <img src="/imges/sunAndRainy.png" class="fav-icon" style="height: 35px; width: auto;">
+            </div>
+        </div>
+    </div>
+</div>
 
     <!--Bottom-cards-->
 
@@ -121,30 +135,30 @@
             <div class="col d-flex justify-content-center">
                 <div class="card text-center  city-text">
                     <div class="card-body5">
-                        <p class="card-text days-text">Tue</p>
-                        <img src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid small-icon mb-3">
-                        <h2 class="H-L">H:50° F</h2>
-                        <h2 class="H-L">L:42° F</h2>
+                        <p id="day-0" class="card-text days-text">Tue</p>
+                        <img id="icon-0" src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid small-icon mb-3">
+                        <h2 id="high-0" class="H-L">H:50° F</h2>
+                        <h2 id="low-0" class="H-L">L:42° F</h2>
                     </div>
                 </div>
             </div>
             <div class="col d-flex justify-content-center">
                 <div class="card text-center">
                     <div class="card-body5">
-                        <p class="card-text days-text">Tue</p>
-                        <img src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid small-icon mb-3">
-                        <h2 class="H-L">H:50° F</h2>
-                        <h2 class="H-L">L:42° F</h2>
+                        <p id="day-1" class="card-text days-text">Tue</p>
+                        <img id="icon-1" src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid small-icon mb-3">
+                        <h2 id="high-1" class="H-L">H:50° F</h2>
+                        <h2 id="low-1"  class="H-L">L:42° F</h2>
                     </div>
                 </div>
             </div>
             <div class="col d-flex justify-content-center">
                 <div class="card text-center">
                     <div class="card-body5">
-                        <p class="card-text days-text">Tue</p>
-                        <img src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid small-icon mb-3">
-                        <h2 class="H-L">H:50° F</h2>
-                        <h2 class="H-L">L:42° F</h2>
+                        <p id="day-2" class="card-text days-text">Tue</p>
+                        <img id="icon-2" src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid small-icon mb-3">
+                        <h2 id="high-2" class="H-L">H:50° F</h2>
+                        <h2 id="low-2"  class="H-L">L:42° F</h2>
 
                     </div>
                 </div>
@@ -152,28 +166,25 @@
             <div class="col d-flex justify-content-center">
                 <div class="card text-center">
                     <div class="card-body5">
-                        <p class="card-text days-text">Tue</p>
-                        <img src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid small-icon mb-3">
-                        <h2 class="H-L">H:50° F</h2>
-                        <h2 class="H-L">L:42° F</h2>
+                        <p id="day-3" class="card-text days-text">Tue</p>
+                        <img id="icon-3" src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid small-icon mb-3">
+                        <h2 id="high-3" class="H-L">H:50° F</h2>
+                        <h2 id="low-3"  class="H-L">L:42° F</h2>
                     </div>
                 </div>
             </div>
             <div class="col d-flex justify-content-center">
                 <div class="card text-center h-100">
                     <div class="card-body5">
-                        <p class="card-text days-text">Tue</p>
-                        <img src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid small-icon mb-3">
-                        <h2 class="H-L">H:50° F</h2>
-                        <h2 class="H-L">L:42° F</h2>
+                        <p id="day-4" class="card-text days-text">Tue</p>
+                        <img id="icon-4" src="/imges/sunnyAndCloudy.png" alt="Weather Icon" class="img-fluid small-icon mb-3">
+                        <h2 id="high-4" class="H-L">H:50° F</h2>
+                        <h2 id="low-4"  class="H-L">L:42° F</h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

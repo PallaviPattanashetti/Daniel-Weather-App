@@ -160,7 +160,7 @@ input:checked+.slider:before {
   width: 217.77px;
   height: 217.77px;
   position: relative;
-  top: -15px;
+  top: -35px;
   left: 10px;
 
 
@@ -183,7 +183,8 @@ input:checked+.slider:before {
   font-family: inter;
   color: white;
   margin-top: -55px;
-  margin-bottom: 0;
+  margin-bottom: 0px;
+  
 
 }
 
@@ -285,6 +286,15 @@ h5 {
 }
 
 .city-name {
-  font-size: 24px;
+  font-size: 19px;
 
+}
+
+.white-star.active {
+    /* Precise Dark Yellow / Amber Filter */
+    filter: invert(80%) sepia(90%) saturate(1500%) hue-rotate(35deg) brightness(105%) contrast(105%);
+    
+    transition: transform 0.2s ease;
+    transform: scale(1.2);
+    display: inline-block;
 }
