@@ -145,7 +145,7 @@ function renderFavorites() {
 
    favorites.forEach(city => {
       const safeId = city.replace(/\s+/g, '-');
-      const safeCity = city.replace(/'/g, "\\'"); // 
+      const safeCity = city.replace(/'/g, "\\'"); 
 
       const newCard = `
          <div class="card mb-3 shadow-sm mx-auto fav-item-card" 
