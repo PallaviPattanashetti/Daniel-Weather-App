@@ -133,7 +133,7 @@ function renderFavorites() {
 
    const favorites = getLocalStorage();
 
-   favoritesList.innerHTML = '<h5 class="title-fav-list mb-3">Top 5 Favorites List</h5>';
+   favoritesList.innerHTML = '<h5 class="title-fav-2-list mb-3">Top 5 Favorites List</h5>';
 
 if (!favorites || favorites.length === 0) {
       favoritesList.insertAdjacentHTML(
@@ -234,8 +234,6 @@ if (getLocationBtn) {
       else handleGeolocation();
    });
 }
-
-
 
 
 const starBtn = document.getElementById('favouriteStar');
