@@ -70,7 +70,7 @@ function updateUI(data) {
    const star = document.getElementById('favouriteStar');
    if (star) {
       star.classList.toggle('active', isFavorited(cityName));
-      star.dataset.city = cityName; 
+      star.dataset.city = cityName;
    }
 
    // 5-Day Forecast 
@@ -102,20 +102,20 @@ function updateUI(data) {
 // === Favorites Weather  ====
 
 function updateFavWeather(city) {
-  
+
    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKEY}&units=imperial`;
-   
+
    fetch(url)
       .then(res => res.json())
       .then(data => {
          if (!data || !data.list || !data.list[0]) return;
 
          const safeId = city.replace(/\s+/g, '-');
-         const forecastItem = data.list[0]; 
-         
+         const forecastItem = data.list[0];
+
          const tempElem = document.getElementById(`fav-temp-${safeId}`);
          const iconElem = document.getElementById(`fav-icon-${safeId}`);
-         
+
          if (tempElem) tempElem.textContent = `${Math.round(forecastItem.main.temp)}°F`;
          if (iconElem && forecastItem.weather && forecastItem.weather[0]) {
             iconElem.src = `https://openweathermap.org/img/wn/${forecastItem.weather[0].icon}@2x.png`;
@@ -135,7 +135,7 @@ function renderFavorites() {
 
    favoritesList.innerHTML = '<h5 class="title-fav-list mb-3">Top 5 Favorites List</h5>';
 
-   if (!favorites || favorites.length === 0) {
+if (!favorites || favorites.length === 0) {
       favoritesList.insertAdjacentHTML(
          'beforeend',
          '<p class="text-muted text-center"></p>'
@@ -145,7 +145,7 @@ function renderFavorites() {
 
    favorites.forEach(city => {
       const safeId = city.replace(/\s+/g, '-');
-      const safeCity = city.replace(/'/g, "\\'"); 
+      const safeCity = city.replace(/'/g, "\\'");
 
       const newCard = `
          <div class="card mb-3 shadow-sm mx-auto fav-item-card" 
@@ -212,8 +212,8 @@ window.apiCallFromFav = (city) => apiCall(city);
 window.removeFav = (city) => {
    removeFromStorage(city);
    renderFavorites();
-   
-   
+
+
    const cityNameEl = document.getElementById("cityName");
    const star = document.getElementById('favouriteStar');
    if (cityNameEl && star) {
@@ -236,10 +236,12 @@ if (getLocationBtn) {
 }
 
 
+
+
 const starBtn = document.getElementById('favouriteStar');
 if (starBtn) {
    starBtn.addEventListener('click', function () {
-       const cityNameEl = document.getElementById('cityName');
+      const cityNameEl = document.getElementById('cityName');
       const displayCity = cityNameEl?.textContent?.trim() || '';
 
       if (!displayCity) {
@@ -248,7 +250,7 @@ if (starBtn) {
       }
 
       const cityName = displayCity.split(',')[0].trim();
-      
+
       if (!cityName) return;
 
       const favorites = getLocalStorage();
@@ -266,7 +268,7 @@ if (starBtn) {
          this.classList.remove('active');
          renderFavorites();
       }
-   
+
       localStorage.setItem('weatherFavorites', JSON.stringify(getLocalStorage()));
    });
 }

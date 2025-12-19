@@ -103,8 +103,10 @@ input:checked+.slider:before {
 
 .title-home2 {
 
-  font-size: 25px;
+ 
+  font-size: 40px;
   margin-left: 100px;
+  
   color: white;
 
 
@@ -272,17 +274,15 @@ h5 {
   font-size: 35px;
 }
 
-.title-fav-list {
-  color:  black;
+
+
+.title-fav-2-list{
   font-size: 35px;
+  color: white;
 
 }
 
-.title-fav2-list{
- font-size: 35px;
- color: white;
 
-}
 
 .fav-icon {
 
@@ -300,12 +300,6 @@ h5 {
   }
 }
 
-.title-fav-day {
-
-  font-size: 35px;
-  color: black;
-
-}
 
 .city-name {
   font-size: 19px;
