@@ -5,7 +5,7 @@ import { saveToStorage, getLocalStorage, removeFromStorage, isFavorited } from '
 const searchUserInput = document.getElementById("searchUserInput");
 const getLocationBtn = document.getElementById("getLocationBtn");
 
-// === API Call Function (Main Weather) ====
+// === API Call ====
 function apiCall(city, lat = null, lon = null) {
    let url;
    if (lat !== null && lon !== null) {
@@ -66,14 +66,14 @@ function updateUI(data) {
       currentIconElem.src = `https://openweathermap.org/img/wn/${mainIconCode}@4x.png`;
    }
 
-   // FIXED: Update star state AFTER city data loads
+   // star  city 
    const star = document.getElementById('favouriteStar');
    if (star) {
       star.classList.toggle('active', isFavorited(cityName));
-      star.dataset.city = cityName;  // Store actual city name from API
+      star.dataset.city = cityName; 
    }
 
-   // 5-Day Forecast Loop
+   // 5-Day Forecast 
    const dailyIndices = [0, 8, 16, 24, 32];
    dailyIndices.forEach((apiIndex, i) => {
       const dayData = data.list[apiIndex];
@@ -99,10 +99,10 @@ function updateUI(data) {
    });
 }
 
-// === Favorites Weather Fetcher ====
-// === FIXED: Favorites use SAME forecast API as main ===
+// === Favorites Weather  ====
+
 function updateFavWeather(city) {
-   // Use FORECAST API (same as main card) instead of current weather
+  
    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKEY}&units=imperial`;
    
    fetch(url)
@@ -111,7 +111,7 @@ function updateFavWeather(city) {
          if (!data || !data.list || !data.list[0]) return;
 
          const safeId = city.replace(/\s+/g, '-');
-         const forecastItem = data.list[0]; // Same as main card uses
+         const forecastItem = data.list[0]; 
          
          const tempElem = document.getElementById(`fav-temp-${safeId}`);
          const iconElem = document.getElementById(`fav-icon-${safeId}`);
@@ -126,7 +126,7 @@ function updateFavWeather(city) {
 }
 
 
-// === Render Favorites List (Title is permanent) ===
+// ===  Favorites List  ===
 function renderFavorites() {
    const favoritesList = document.getElementById('favoritesList');
    if (!favoritesList) return;
@@ -138,14 +138,14 @@ function renderFavorites() {
    if (!favorites || favorites.length === 0) {
       favoritesList.insertAdjacentHTML(
          'beforeend',
-         '<p class="text-muted text-center">Add your favorite cities!</p>'
+         '<p class="text-muted text-center"></p>'
       );
       return;
    }
 
    favorites.forEach(city => {
       const safeId = city.replace(/\s+/g, '-');
-      const safeCity = city.replace(/'/g, "\\'"); // Escape for onclick
+      const safeCity = city.replace(/'/g, "\\'"); // 
 
       const newCard = `
          <div class="card mb-3 shadow-sm mx-auto fav-item-card" 
@@ -172,7 +172,7 @@ function renderFavorites() {
    });
 }
 
-// --- Geolocation Logic ---
+// --- Geolocation  ---
 function handleGeolocation() {
    if (!navigator.geolocation) {
       apiCall("Stockton");
@@ -206,14 +206,14 @@ function handleGeolocation() {
    );
 }
 
-// --- Global Helpers ---
+
 window.apiCallFromFav = (city) => apiCall(city);
 
 window.removeFav = (city) => {
    removeFromStorage(city);
    renderFavorites();
    
-   // FIXED: Sync star state when removing from favorites
+   
    const cityNameEl = document.getElementById("cityName");
    const star = document.getElementById('favouriteStar');
    if (cityNameEl && star) {
@@ -235,7 +235,7 @@ if (getLocationBtn) {
    });
 }
 
-// FIXED: Single star click handler - uses data from API, not empty DOM
+
 const starBtn = document.getElementById('favouriteStar');
 if (starBtn) {
    starBtn.addEventListener('click', function () {
@@ -266,12 +266,12 @@ if (starBtn) {
          this.classList.remove('active');
          renderFavorites();
       }
-      // Force storage sync for Chrome
+   
       localStorage.setItem('weatherFavorites', JSON.stringify(getLocalStorage()));
    });
 }
 
-// Initial Load
+
 window.addEventListener("load", () => {
    handleGeolocation();
    renderFavorites();
