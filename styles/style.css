@@ -9,6 +9,21 @@ body {
 }
 
 
+
+.navbar-toggler-icon {
+  
+    filter: invert(42%) sepia(13%) saturate(1754%) hue-rotate(211deg) brightness(92%) contrast(88%);
+}
+
+.navbar-toggler {
+    border-color: #6b5fa6 !important;
+}
+
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0.25rem rgba(107, 95, 166, 0.25) !important;
+}
+
 .title-home {
 
   font-size: 40px;
@@ -16,7 +31,7 @@ body {
   
 }
 
-search-btn {
+.search-btn {
 
   width: 300px;
 
@@ -194,8 +209,8 @@ input:checked+.slider:before {
   width: 80px;
   height: 80px;
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 65px;
+  right: 2px;
   margin-right: 5%;
 }
 
@@ -258,8 +273,14 @@ h5 {
 }
 
 .title-fav-list {
-  color: black;
+  color:  white;
   font-size: 35px;
+
+}
+
+.title-fav2-list{
+ font-size: 35px;
+ color: white;
 
 }
 
@@ -292,10 +313,12 @@ h5 {
 }
 
 .white-star.active {
-    /* Precise Dark Yellow / Amber Filter */
+  
     filter: invert(80%) sepia(90%) saturate(1500%) hue-rotate(35deg) brightness(105%) contrast(105%);
     
     transition: transform 0.2s ease;
     transform: scale(1.2);
     display: inline-block;
 }
+
+

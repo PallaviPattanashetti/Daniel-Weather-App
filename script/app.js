@@ -1,14 +1,14 @@
-import { APIKEY } from './environment.js';
-import { saveToStorage, getLocalStorage, removeFromStorage, isFavorited } from './localStorage.js'
 
+import { APIKEY } from './environment.js';
+import { saveToStorage, getLocalStorage, removeFromStorage, isFavorited } from './localStorage.js';
 
 const searchUserInput = document.getElementById("searchUserInput");
 const getLocationBtn = document.getElementById("getLocationBtn");
 
-// ===API Call Function ====
+// === API Call Function (Main Weather) ====
 function apiCall(city, lat = null, lon = null) {
    let url;
-   if (lat && lon) {
+   if (lat !== null && lon !== null) {
       url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=imperial`;
    } else if (city) {
       url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKEY}&units=imperial`;
@@ -22,197 +22,270 @@ function apiCall(city, lat = null, lon = null) {
          return response.json();
       })
       .then(data => {
-         console.log("Weather Data Received:", data);
          updateUI(data);
-         searchUserInput.placeholder = "Search City";
+         if (searchUserInput) {
+            searchUserInput.placeholder = "Search City";
+         }
       })
       .catch(err => {
          console.error("API Error:", err);
-         searchUserInput.value = "";
-         searchUserInput.placeholder = "City not found...";
+         if (searchUserInput) {
+            searchUserInput.value = "";
+            searchUserInput.placeholder = "City not found...";
+         }
       });
 }
 
-// ==Function ==
+// === Update UI Function ====
 function updateUI(data) {
+   if (!data || !data.city || !data.list || !data.list.length) return;
 
-   //==current card
+   const cityName = data.city.name;
+   const country = data.city.country;
    const current = data.list[0];
 
-document.getElementById("cityName").textContent = data.city.name;
-   document.getElementById("currentTemp").textContent = `${Math.round(current.main.temp)}° F`;
-   document.getElementById("currentHigh").textContent = `H: ${Math.round(current.main.temp_max)}°`;
-   document.getElementById("currentLow").textContent = `L: ${Math.round(current.main.temp_min)}°`;
+   const cityNameEl = document.getElementById("cityName");
+   if (cityNameEl) cityNameEl.textContent = `${cityName}, ${country}`;
 
-//  Current Day Name
+   const tempEl = document.getElementById("currentTemp");
+   if (tempEl) tempEl.textContent = `${Math.round(current.main.temp)}° F`;
+
+   const highEl = document.getElementById("currentHigh");
+   if (highEl) highEl.textContent = `H: ${Math.round(current.main.temp_max)}°`;
+
+   const lowEl = document.getElementById("currentLow");
+   if (lowEl) lowEl.textContent = `L: ${Math.round(current.main.temp_min)}°`;
+
    const today = new Date();
-   document.getElementById("currentDay").textContent = today.toLocaleDateString('en-US', { weekday: 'long' });
+   const currentDayEl = document.getElementById("currentDay");
+   if (currentDayEl) currentDayEl.textContent = today.toLocaleDateString('en-US', { weekday: 'long' });
 
-   // Main Icon 
    const mainIconCode = current.weather[0].icon;
    const currentIconElem = document.getElementById("currentIcon");
    if (currentIconElem) {
       currentIconElem.src = `https://openweathermap.org/img/wn/${mainIconCode}@4x.png`;
    }
 
-   // == 5-Day FC
+   // FIXED: Update star state AFTER city data loads
+   const star = document.getElementById('favouriteStar');
+   if (star) {
+      star.classList.toggle('active', isFavorited(cityName));
+      star.dataset.city = cityName;  // Store actual city name from API
+   }
+
+   // 5-Day Forecast Loop
    const dailyIndices = [0, 8, 16, 24, 32];
    dailyIndices.forEach((apiIndex, i) => {
       const dayData = data.list[apiIndex];
-      const date = new Date(dayData.dt_txt);
+      if (!dayData) return;
 
-      // == Day Name
-      document.getElementById(`day-${i}`).textContent = date.toLocaleDateString('en-US', { weekday: 'short' });
+      const date = new Date(dayData.dt * 1000);
 
-      //=== High/Low
-      document.getElementById(`high-${i}`).textContent = `H: ${Math.round(dayData.main.temp_max)}° F`;
-      document.getElementById(`low-${i}`).textContent = `L: ${Math.round(dayData.main.temp_min)}° F`;
+      const dayElem = document.getElementById(`day-${i}`);
+      if (dayElem) {
+         dayElem.textContent = date.toLocaleDateString('en-US', { weekday: 'short' });
+      }
 
-      // === Small Icons
-      const iconCode = dayData.weather[0].icon;
+      const highElem = document.getElementById(`high-${i}`);
+      const lowElem = document.getElementById(`low-${i}`);
+      if (highElem) highElem.textContent = `H: ${Math.round(dayData.main.temp_max)}° F`;
+      if (lowElem) lowElem.textContent = `L: ${Math.round(dayData.main.temp_min)}° F`;
+
       const iconElem = document.getElementById(`icon-${i}`);
-      if (iconElem) {
-         iconElem.src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+      if (iconElem && dayData.weather && dayData.weather[0]) {
+         iconElem.src = `https://openweathermap.org/img/wn/${dayData.weather[0].icon}@2x.png`;
+         iconElem.alt = dayData.weather[0].description || '';
       }
    });
 }
 
-// --- Geolocation Logic  ---
+// === Favorites Weather Fetcher ====
+// === FIXED: Favorites use SAME forecast API as main ===
+function updateFavWeather(city) {
+   // Use FORECAST API (same as main card) instead of current weather
+   const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKEY}&units=imperial`;
+   
+   fetch(url)
+      .then(res => res.json())
+      .then(data => {
+         if (!data || !data.list || !data.list[0]) return;
 
+         const safeId = city.replace(/\s+/g, '-');
+         const forecastItem = data.list[0]; // Same as main card uses
+         
+         const tempElem = document.getElementById(`fav-temp-${safeId}`);
+         const iconElem = document.getElementById(`fav-icon-${safeId}`);
+         
+         if (tempElem) tempElem.textContent = `${Math.round(forecastItem.main.temp)}°F`;
+         if (iconElem && forecastItem.weather && forecastItem.weather[0]) {
+            iconElem.src = `https://openweathermap.org/img/wn/${forecastItem.weather[0].icon}@2x.png`;
+            iconElem.alt = forecastItem.weather[0].description || '';
+         }
+      })
+      .catch(err => console.error("Error fetching fav weather:", err));
+}
+
+
+// === Render Favorites List (Title is permanent) ===
+function renderFavorites() {
+   const favoritesList = document.getElementById('favoritesList');
+   if (!favoritesList) return;
+
+   const favorites = getLocalStorage();
+
+   favoritesList.innerHTML = '<h5 class="title-fav-list mb-3">Top 5 Favorites List</h5>';
+
+   if (!favorites || favorites.length === 0) {
+      favoritesList.insertAdjacentHTML(
+         'beforeend',
+         '<p class="text-muted text-center">Add your favorite cities!</p>'
+      );
+      return;
+   }
+
+   favorites.forEach(city => {
+      const safeId = city.replace(/\s+/g, '-');
+      const safeCity = city.replace(/'/g, "\\'"); // Escape for onclick
+
+      const newCard = `
+         <div class="card mb-3 shadow-sm mx-auto fav-item-card" 
+              style="height: 71px; max-width: 364px; width: 100%; border-radius: 10px; overflow: hidden;">
+            <div class="card-body d-flex justify-content-between align-items-center p-3">
+               <p class="card-text city-name mb-0 fw-medium" 
+                  style="cursor:pointer" 
+                  onclick="window.apiCallFromFav('${safeCity}')">
+                  ${city}
+               </p>
+               <div class="d-flex align-items-center">
+                  <p id="fav-temp-${safeId}" class="card-temperature mb-0 me-3 fw-bold">--°F</p>
+                  <img id="fav-icon-${safeId}" src="https://openweathermap.org/img/wn/01d@2x.png" class="fav-icon" style="height: 35px; width: auto;">
+                  <button class="btn btn-sm btn-outline-danger ms-2" 
+                          style="border:none; font-size: 1.2rem;" 
+                          onclick="window.removeFav('${safeCity}')">
+                      <i class="bi bi-x-circle-fill"></i>
+                  </button>
+               </div>
+            </div>
+         </div>`;
+      favoritesList.insertAdjacentHTML('beforeend', newCard);
+      updateFavWeather(city);
+   });
+}
+
+// --- Geolocation Logic ---
 function handleGeolocation() {
    if (!navigator.geolocation) {
-      searchUserInput.placeholder = "Geo not supported";
       apiCall("Stockton");
       return;
    }
 
-   searchUserInput.placeholder = "Getting location...";
+   if (searchUserInput) {
+      searchUserInput.placeholder = "Getting location...";
+   }
 
    navigator.geolocation.getCurrentPosition(
       (position) => {
-         const latitude = position.coords.latitude;
-         const longitude = position.coords.longitude;
-         console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-         apiCall(null, latitude, longitude);
+         const lat = position.coords.latitude;
+         const lon = position.coords.longitude;
+         const geoUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${APIKEY}`;
+
+         fetch(geoUrl)
+            .then(res => res.json())
+            .then(geoData => {
+               const cityNameEl = document.getElementById("cityName");
+               if (cityNameEl && Array.isArray(geoData) && geoData.length > 0) {
+                  const loc = geoData[0];
+                  const state = loc.state ? `${loc.state}, ` : "";
+                  cityNameEl.textContent = `${loc.name}, ${state}${loc.country}`;
+               }
+               apiCall(null, lat, lon);
+            })
+            .catch(() => apiCall(null, lat, lon));
       },
-      (error) => {
-         let errorMsg = "";
-         switch (error.code) {
-            case error.PERMISSION_DENIED:
-               errorMsg = "Permission denied.";
-               break;
-            case error.POSITION_UNAVAILABLE:
-               errorMsg = "Location unavailable.";
-               break;
-            case error.TIMEOUT:
-               errorMsg = "Request timed out.";
-               break;
-            default:
-               errorMsg = "Unknown error.";
-         }
-         console.warn(errorMsg);
-         searchUserInput.placeholder = errorMsg;
-         apiCall("Stockton");
-      }
+      () => apiCall("Stockton")
    );
 }
 
-// --- Event Listeners ---
-
-//===city
-
-getLocationBtn.addEventListener("click", (event) => {
-   event.preventDefault();
-   const city = searchUserInput.value.trim();
-   if (city.length > 1) {
-      apiCall(city);
-   } else {
-      handleGeolocation();
-   }
-});
-
-// 2. Auto-load 
-window.addEventListener("load", handleGeolocation);
-
-// 3. Dark Mode Toggle
-const toggle = document.querySelector('.switch input');
-if (window.location.pathname.includes('night.html')) {
-   toggle.checked = true;
-}
-toggle.addEventListener('change', function () {
-   setTimeout(() => {
-      window.location.href = this.checked ? 'night.html' : 'index.html';
-   }, 250);
-});
-
-
-//==fav==
-function renderFavorites() {
-   const favoritesList = document.getElementById('favoritesList');
-   const favorites = getLocalStorage();
-
-
-   favoritesList.innerHTML = '<h5 class="title-fav-list mb-3">Top 5 Favorites List</h5>';
-
-   favorites.forEach(city => {
-      const newCard = `
-            <div class="card mb-3 shadow-sm mx-auto fav-item-card" 
-         style="height: 71px; max-width: 364px; width: 100%; border-radius: 10px; overflow: hidden;">
-        <div class="card-body d-flex justify-content-between align-items-center p-3">
-            <p class="card-text city-name mb-0 fw-medium">${city}</p>
-            <div class="d-flex align-items-center">
-                <p id="fav-temp-${city}" class="card-temperature mb-0 me-3 fw-bold">--°F</p>
-                <img id="fav-icon-${city}" src="/imges/sunAndRainy.png" class="fav-icon" style="height: 35px; width: auto;">
-                
-                <button class="btn btn-sm btn-outline-danger ms-2" 
-                        style="border:none; font-size: 1.2rem;" 
-                        onclick="removeFav('${city}')">
-                    <i class="bi bi-x-circle-fill"></i>
-                </button>
-            </div>
-        </div>
-    </div>`;
-      favoritesList.insertAdjacentHTML('beforeend', newCard);
-   });
-}
-
+// --- Global Helpers ---
+window.apiCallFromFav = (city) => apiCall(city);
 
 window.removeFav = (city) => {
    removeFromStorage(city);
    renderFavorites();
-
-
-   const currentOnScreen = document.getElementById("cityName").textContent;
-   if (currentOnScreen === city) {
-      document.getElementById('favouriteStar').classList.remove('active');
+   
+   // FIXED: Sync star state when removing from favorites
+   const cityNameEl = document.getElementById("cityName");
+   const star = document.getElementById('favouriteStar');
+   if (cityNameEl && star) {
+      const currentCity = cityNameEl.textContent.split(',')[0].trim();
+      if (currentCity === city) {
+         star.classList.remove('active');
+         star.dataset.city = '';
+      }
    }
 };
 
-document.getElementById('favouriteStar').addEventListener('click', function () {
-   const cityName = document.getElementById('cityName').textContent;
-   const favorites = getLocalStorage();
+// --- Event Listeners ---
+if (getLocationBtn) {
+   getLocationBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      const city = (searchUserInput?.value || "").trim();
+      if (city.length > 1) apiCall(city);
+      else handleGeolocation();
+   });
+}
 
-   if (!isFavorited(cityName)) {
+// FIXED: Single star click handler - uses data from API, not empty DOM
+const starBtn = document.getElementById('favouriteStar');
+if (starBtn) {
+   starBtn.addEventListener('click', function () {
+       const cityNameEl = document.getElementById('cityName');
+      const displayCity = cityNameEl?.textContent?.trim() || '';
 
-      if (favorites.length < 5) {
-         saveToStorage(cityName);
-         this.classList.add('active');
-      } else {
-         alert("Favorite list is full! Remove one to add another.");
+      if (!displayCity) {
+         alert("Load a city first!");
+         return;
       }
-   } else {
-      removeFromStorage(cityName);
-      this.classList.remove('active');
-   }
 
-   renderFavorites();
-});
+      const cityName = displayCity.split(',')[0].trim();
+      
+      if (!cityName) return;
 
-const star = document.getElementById('favouriteStar');
-star.classList.toggle('active', isFavorited(data.city.name));
+      const favorites = getLocalStorage();
 
+      if (!isFavorited(cityName)) {
+         if (favorites.length < 5) {
+            saveToStorage(cityName);
+            this.classList.add('active');
+            renderFavorites();
+         } else {
+            alert("Favorite list is full! (Max 5)");
+         }
+      } else {
+         removeFromStorage(cityName);
+         this.classList.remove('active');
+         renderFavorites();
+      }
+      // Force storage sync for Chrome
+      localStorage.setItem('weatherFavorites', JSON.stringify(getLocalStorage()));
+   });
+}
 
+// Initial Load
 window.addEventListener("load", () => {
    handleGeolocation();
    renderFavorites();
 });
+
+// Dark Mode Toggle
+const toggle = document.querySelector('.switch input');
+if (toggle) {
+   if (window.location.pathname.includes('night.html')) {
+      toggle.checked = true;
+   }
+   toggle.addEventListener('change', function () {
+      setTimeout(() => {
+         window.location.href = this.checked ? 'night.html' : 'index.html';
+      }, 250);
+   });
+}
