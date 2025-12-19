@@ -13,6 +13,7 @@ body {
 
   font-size: 40px;
   margin-left: 100px;
+  
 }
 
 search-btn {
@@ -257,7 +258,7 @@ h5 {
 }
 
 .title-fav-list {
-  color: white;
+  color: black;
   font-size: 35px;
 
 }
